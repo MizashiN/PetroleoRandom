@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Guardando Informações</title>
+</head>
+<body>
+    <h1>Guardando Informações</h1>
+    <div class="buttonDarklight">
+    <button id="theme-toggle">Toggle theme</button>
+    </div>
+    <!-- Formulário para inserir informações -->
+    <section class="main">
+    <form id="infoForm">
+        <label for="title">Título:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+        
+        <label for="content">Conteúdo:</label><br>
+        <textarea id="content" name="content" rows="4" cols="50" required></textarea><br><br>
+        
+        <button type="submit">Salvar</button>
+    </form>
+    </section>
+
+    <!-- Campo para pesquisa -->
+    <div class="central">
+    <input type="text" id="searchInput" placeholder="Pesquisar informações"><br><br>
+    </div>  
+    <!-- Lista de informações salvas -->
+    <div id="infoList">
+        <h2>Informações Salvas:</h2>
+        <ul id="savedInfo">
+            <!-- Aqui serão exibidas as informações salvas -->
+        </ul>
+    </div>
+       
+    <script src="script.js"></script>
+</body>
+</html>
+
+
