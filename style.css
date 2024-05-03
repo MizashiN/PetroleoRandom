@@ -88,6 +88,27 @@ button:hover {
 }
 
 
+#download-pdf-link {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    text-decoration: none;
+  }
+  
+  #download-pdf-link:hover {
+    background-color: #45a049;
+  }
+
+  .PositionButton {
+    padding-left: 150px;
+  }
+
+
 .central {
     display: flex;
     justify-content: center;
