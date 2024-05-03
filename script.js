@@ -21,12 +21,13 @@ document.getElementById("infoForm").addEventListener("submit", function(event) {
         // Check if the user clicked "Cancel" or "OK" in the prompt
         if (newTitle !== null && newContent !== null) {
             newItem.innerHTML = "<strong>" + newTitle + ":</strong> " + newContent;
+            saveInfoToLocalStorage(newTitle, newContent);
+            removeFromLocalStorage(title);
+            title = newTitle;
+            content = newContent;
         }
     };
     newItem.appendChild(editButton);
-
-    // Adicionar o novo item à lista de informações salvas
-    document.getElementById("savedInfo").appendChild(newItem);
 
     // Adicionar botão de deletar ao novo item
     var deleteButton = document.createElement("button");
@@ -34,12 +35,19 @@ document.getElementById("infoForm").addEventListener("submit", function(event) {
     deleteButton.className = "delete";
     deleteButton.onclick = function() {
         newItem.remove();
+        removeFromLocalStorage(title);
     };
     newItem.appendChild(deleteButton);
+
+    // Adicionar o novo item à lista de informações salvas
+    document.getElementById("savedInfo").appendChild(newItem);
 
     // Limpar os campos do formulário
     document.getElementById("title").value = "";
     document.getElementById("content").value = "";
+
+    // Salvar informação no local storage
+    saveInfoToLocalStorage(title, content);
 });
 
 // Função para pesquisar informações
@@ -60,12 +68,63 @@ document.getElementById("searchInput").addEventListener("keyup", function() {
     }
 });
 
-// Get the theme toggle button
+// Função para salvar informação no local storage
+// Função para salvar informação no local storage
+// Função para salvar informação no local storage
+function saveInfoToLocalStorage(title, content) {
+  const infoList = localStorage.getItem('infoList') || '[]';
+  const newList = JSON.parse(infoList);
+  newList.push({ title, content });
+  localStorage.setItem('infoList', JSON.stringify(newList));
+}
+// Função para remover informação do local storage
+function removeFromLocalStorage(title) {
+  const infoList = localStorage.getItem('infoList') || '[]';
+  const parsedList = JSON.parse(infoList);
+  const updatedList = parsedList.filter((item) => item.title !== title);
+  localStorage.setItem('infoList', JSON.stringify(updatedList));
+}
 
+// Função para carregar informação do local storage
+// Função para carregar informação do local storage
+function loadInfoFromLocalStorage() {
+    const infoList = localStorage.getItem('infoList') || '[]';
+    const parsedList = JSON.parse(infoList);
+  
+    parsedList.forEach((item) => {
+      const newItem = document.createElement("li");
+      newItem.innerHTML = "<strong>" + item.title + ":</strong> " + item.content;
+  
+      const editButton = document.createElement("button");
+      editButton.textContent = "Editar";
+      editButton.className = "edit";
+      editButton.onclick = function() {
+        var newTitle = prompt("Novo título:", item.title);
+        var newContent = prompt("Novo conteúdo:", item.content);
+  
+        // Check if the user clicked "Cancel" or "OK" in the prompt
+        if (newTitle !== null && newContent !== null) {
+          newItem.innerHTML = "<strong>" + newTitle + ":</strong> " + newContent;
+          saveInfoToLocalStorage(newTitle, newContent);
+          removeFromLocalStorage(item.title);
+        }
+      };
+      newItem.appendChild(editButton);
+  
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Deletar";
+      deleteButton.className = "delete";
+      deleteButton.onclick = function() {
+        newItem.remove();
+        removeFromLocalStorage(item.title);
+      };
+      newItem.appendChild(deleteButton);
+  
+      document.getElementById("savedInfo").appendChild(newItem);
+    });
+  }
 
-
-
-const themeToggle = document.getElementById('theme-toggle');
+  const themeToggle = document.getElementById('theme-toggle');
 let currentTheme = localStorage.getItem('theme') || 'light';
 
 document.documentElement.setAttribute('data-theme', currentTheme);
@@ -85,3 +144,5 @@ function updateCurrentTheme(newTheme) {
   currentTheme = newTheme;
   themeToggle.textContent = currentTheme;
 }
+// Chamar função para carregar informação do local storage
+loadInfoFromLocalStorage();
