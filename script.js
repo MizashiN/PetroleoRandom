@@ -146,3 +146,20 @@ function updateCurrentTheme(newTheme) {
 }
 // Chamar função para carregar informação do local storage
 loadInfoFromLocalStorage();
+const downloadPdfLink = document.getElementById('download-pdf-link');
+const filePath = 'C:/Users/Parafal/Documents/Project/Elementia Ficha[1].pdf';
+
+const xhr = new XMLHttpRequest();
+xhr.open('GET', filePath, true);
+xhr.responseType = 'arraybuffer';
+xhr.onload = function() {
+  if (xhr.status === 200) {
+    const fileBlob = new Blob([xhr.response], { type: 'application/pdf' });
+    const url = URL.createObjectURL(fileBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Elementia Ficha[1].pdf';
+    a.click();
+  }
+};
+xhr.send();
